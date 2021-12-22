@@ -1,0 +1,150 @@
+.container {
+  width: 800px;
+  margin: 50px auto;
+  padding: 50px;
+  background-color: black;
+  color: #fff;
+}
+
+.header {
+  padding: 10px 0px;
+}
+
+.header h1 {
+  float: left;
+  font-size: 24px;
+}
+
+.header a {
+  float: right;
+  padding: 10px 20px;
+  background-color: #297ae6;
+  color: #fff;
+  text-decoration: none;
+}
+
+.clearfix::before,
+.clearfix::after {
+  display: table;
+  clear: both;
+  content: '';
+}
+
+table {
+  width: 100%;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: #696969;
+  color: #fff;
+}
+
+.email {
+  width: 30%;
+}
+
+th,
+td {
+  padding: 10px 0px;
+  border: 1px solid black;
+  text-align: center;
+}
+
+th {
+  padding: 15px 0px;
+}
+
+td a {
+  margin: 0 5px;
+}
+
+.fa-eye {
+  color: #297ae6;
+}
+
+.fa-edit {
+  color: #297ae6;
+}
+
+.fa-trash-alt {
+  color: #d80b0b;
+}
+
+.nostu {
+  padding: 30px 0px;
+  color: #ff0000;
+  text-align: center;
+}
+
+.con {
+  width: 700px;
+  margin: 50px auto;
+  padding: 50px;
+  background-color: black;
+  text-align: center;
+  border-radius: 5px;
+}
+.title{
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.card h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+input[type=text],
+input[type=number],
+input[type=email],
+input[type=tel],
+select {
+  width: 60%;
+  margin: 15px 0px;
+  padding: 10px 15px;
+  border: 1px solid #979797;
+  background-color: #e8f0fe;
+  text-align: center;
+}
+
+select {
+  width: 66%;
+  margin-bottom: 5px;
+  padding: 10px 20px;
+}
+
+input[type=submit],
+.btn {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  color: #fff;
+  font-size: 13px;
+}
+
+input[type=submit] {
+  background-color: #297ae6;
+}
+
+.btn {
+  background-color: #ff0000;
+}
+
+.yes-btn {
+  background-color: #800707;
+}
+
+.no-btn {
+  background-color: #0b8f94;
+}
+
+.error {
+  color: #ff0000;
+  font-size: 13px;
+}
+
+a {
+  text-decoration: none;
+}
