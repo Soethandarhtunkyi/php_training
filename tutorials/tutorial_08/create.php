@@ -4,10 +4,7 @@ require_once "config.php";
 $first_name = $last_name = $email = $phone_number = $address = "";
 $first_name_error = $last_name_error = $email_error = $phone_number_error = $address_error = "";
 
-if (isset($_POST["id"]) && !empty($_POST["id"])) {
-
-    $id = $_POST["id"];
-
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $firstName = trim($_POST["first_name"]);
     if (empty($firstName)) {
         $first_name_error = "First Name is required.";
@@ -50,12 +47,8 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
         $address = $address;
     }
 
-    if (
-        empty($first_name_error_err) && empty($last_name_error) &&
-        empty($email_error) && empty($phone_number_error) && empty($address_error)
-    ) {
-
-        $sql = "UPDATE `users` SET `first_name`= '$firstName', `last_name`= '$lastName', `email`= '$email', `phone_number`= '$phoneNumber', `address`= '$address' WHERE id='$id'";
+    if (empty($first_name_error_err) && empty($last_name_error) && empty($email_error) && empty($phone_number_error) && empty($address_error)) {
+        $sql = "INSERT INTO `users` (`first_name`, `last_name`, `email`, `phone_number`, `address`) VALUES ('$firstName', '$lastName', '$email', '$phoneNumber', '$address')";
 
         if (mysqli_query($conn, $sql)) {
             header("location: index.php");
@@ -63,30 +56,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
             echo "Something went wrong. Please try again later.";
         }
     }
-
     mysqli_close($conn);
-} else {
-    if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
-        $id = trim($_GET["id"]);
-        $query = mysqli_query($conn, "SELECT * FROM users WHERE ID = '$id'");
-
-        if ($user = mysqli_fetch_assoc($query)) {
-            $firstName   = $user["first_name"];
-            $lastName    = $user["last_name"];
-            $email       = $user["email"];
-            $phoneNumber = $user["phone_number"];
-            $address     = $user["address"];
-        } else {
-            echo "Something went wrong. Please try again later.";
-            header("location: edit.php");
-            exit();
-        }
-        mysqli_close($conn);
-    } else {
-        echo "Something went wrong. Please try again later.";
-        header("location: edit.php");
-        exit();
-    }
 }
 ?>
 
@@ -95,7 +65,7 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
 
 <head>
     <meta charset="UTF-8">
-    <title>Update Record</title>
+    <title>Create User</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
     <style type="text/css">
         .wrapper {
@@ -111,37 +81,36 @@ if (isset($_POST["id"]) && !empty($_POST["id"])) {
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <h2>Update User</h2>
+                        <h2>Create User</h2>
                     </div>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                        <input type="hidden" name="id" value="<?php echo $id; ?>" />
                         <div class="form-group <?php echo (!empty($first_name_error)) ? 'has-error' : ''; ?>">
                             <label>First Name</label>
-                            <input type="text" name="first_name" class="form-control" value="<?php echo $firstName; ?>">
+                            <input type="text" name="first_name" class="form-control" value="">
                             <span class="help-block"><?php echo $first_name_error; ?></span>
                         </div>
 
                         <div class="form-group <?php echo (!empty($last_name_error)) ? 'has-error' : ''; ?>">
                             <label>Last Name</label>
-                            <input type="text" name="last_name" class="form-control" value="<?php echo $lastName; ?>">
+                            <input type="text" name="last_name" class="form-control" value="">
                             <span class="help-block"><?php echo $last_name_error; ?></span>
                         </div>
 
                         <div class="form-group <?php echo (!empty($email_error)) ? 'has-error' : ''; ?>">
                             <label>Email</label>
-                            <input type="email" name="email" class="form-control" value="<?php echo $email; ?>">
+                            <input type="email" name="email" class="form-control" value="">
                             <span class="help-block"><?php echo $email_error; ?></span>
                         </div>
 
                         <div class="form-group <?php echo (!empty($phone_number_error)) ? 'has-error' : ''; ?>">
                             <label>Phone Number</label>
-                            <input type="number" name="phone_number" class="form-control" value="<?php echo $phoneNumber; ?>">
+                            <input type="number" name="phone_number" class="form-control" value="">
                             <span class="help-block"><?php echo $phone_number_error; ?></span>
                         </div>
 
                         <div class="form-group <?php echo (!empty($address_error)) ? 'has-error' : ''; ?>">
                             <label>Address</label>
-                            <textarea name="address" class="form-control"><?php echo $address; ?></textarea>
+                            <textarea name="address" class="form-control"></textarea>
                             <span class="help-block"><?php echo $address_error; ?></span>
                         </div>
 

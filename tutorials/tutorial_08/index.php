@@ -1,65 +1,79 @@
-<?php
-require_once 'config.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tutorial_08</title>
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/all.min.css">
-</head>
-
-<body>
-  <div class="container">
-    <div class="header clearfix">
-      <h1>Student List</h1>
-      <a href="add.php">Add New Student</a>
-    </div>
-    <br>
-    <br>
-    <?php
-    $sql = "select * from students;";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) :
-    ?>
-      <table>
-        <tr>
-          <th>Id</th>
-          <th>Student Name</th>
-          <th>Age</th>
-          <th>Email</th>
-          <th>Phone Number</th>
-          <th>Major</th>
-          <th></th>
-        </tr>
-        <?php
-
-        while ($row = $result->fetch_assoc()) {
-          echo "<tr>";
-          echo "<td>" . $row['id'] . "</td>";
-          echo "<td>" . $row['student_name'] . "</td>";
-          echo "<td>" . $row['age'] . "</td>";
-          echo "<td class='email'>" . $row['email'] . "</td>";
-          echo "<td>0" . $row['phone_number'] . "</td>";
-          if ($row['major'] == "1") {
-            echo "<td>Computer Science</td>";
-          } else {
-            echo "<td>Business</td>";
+  <head>
+      <meta charset="UTF-8">
+      <title>Dashboard</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <style type="text/css">
+          .wrapper {
+              width: 1200px;
+              margin: 0 auto;
           }
-          echo '<td><a href="edit.php?id=' . $row['id'] . '"><i class="fas fa-edit"></i></a><a href="delete.php?id=' . $row['id'] . '"><i class="fas fa-trash-alt"></i></a></td>';
-          echo "</tr>";
-        }
-        ?>
-      </table>
-    <?php else : ?>
-      <p class="nostu">NO STUDENT YET!</p>
-    <?php endif ?>
-  </div>
-</body>
+      </style>
+  </head>
+  <body>
+    <div class="wrapper">
+        <div class="container-fluid">
+            <div class="row">
+              <h2 class="text-center">PHP CRUD Tutorial Example with <a href="https://codingdriver.com/">Coding Driver</a></h2>
+                <div class="col-md-12">
+                    <div class="page-header clearfix">
+                        <h2 class="pull-left">Users</h2>
+                        <a href="create.php" class="btn btn-success pull-right">Add New User</a>
+                    </div>
+                    <?php
+                    // Include config file
+                  require_once "config.php";
 
+                    // select all users
+                    $data = "SELECT * FROM users";
+                    if($users = mysqli_query($conn, $data)){
+                        if(mysqli_num_rows($users) > 0){
+                            echo "<table class='table table-bordered table-striped'>
+                                    <thead>
+                                      <tr>
+                                        <th>#</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Phone Number</th>
+                                        <th>Address</th>
+                                        <th>Action</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>";
+                                while($user = mysqli_fetch_array($users)) {
+                                    echo "<tr>
+                                            <td>" . $user['id'] . "</td>
+                                            <td>" . $user['first_name'] . "</td>
+                                            <td>" . $user['last_name'] . "</td>
+                                            <td>" . $user['email'] . "</td>
+                                            <td>" . $user['phone_number'] . "</td>
+                                            <td>" . $user['address'] . "</td>
+                                            <td>
+                                              <a href='read.php?id=". $user['id'] ."' title='View User' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>
+                                              <a href='edit.php?id=". $user['id'] ."' title='Edit User' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>
+                                              <a href='delete.php?id=". $user['id'] ."' title='Delete User' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>
+                                            </td>
+                                          </tr>";
+                                }
+                                echo "</tbody>
+                                </table>";
+                            mysqli_free_result($users);
+                        } else{
+                            echo "<p class='lead'><em>No records found.</em></p>";
+                        }
+                    } else{
+                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($conn);
+                    }
+
+                    // Close connection
+                    mysqli_close($conn);
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>
 </html>
