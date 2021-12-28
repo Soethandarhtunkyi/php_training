@@ -82,6 +82,7 @@
         </div>
       </div>
     </div>
+    <a href="logout.php">Logout</a>
   </div>
   <canvas id="pie-chart" width="800" height="450"></canvas>
 </body>
