@@ -12,7 +12,7 @@
   <?php
   session_start();
   unset($_SESSION['user']);
-  header('location: ../tutorial_10/loginform.php');
+  header('location: ../tutorial_10/login-user.php');
   ?>
 </body>
 
